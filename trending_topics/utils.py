@@ -39,10 +39,10 @@ def to_pandas_df(newsletters: list[Newsletter]):
     return pd.DataFrame(data=data).astype(Newsletter.get_pandas_types())
 
 
-def save_to_hdfs(spark, data, schema):
+def save_to_hdfs(spark, data):
     spark_df = spark.createDataFrame(
         data=data,
-        schema=schema
+        schema=Newsletter.get_spark_schema()
     )
     config = read_config()
     hdfs_path: Path = Path(config['hdfs_path'])
@@ -52,11 +52,25 @@ def save_to_hdfs(spark, data, schema):
 def read_parquet(spark):
     config = read_config()
     hdfs_path: Path = Path(config['hdfs_path'])
-    return spark.read.parquet(str(hdfs_path))
+    return (
+        spark
+        .read
+        .load(
+            path=str(hdfs_path),
+            schema=Newsletter.get_spark_schema()
+        )
+    )
 
 
 def save_statistics(data):
     config = read_config()
     output_path = Path(config['outputs_path'])
     with open(output_path / 'statistics.json', 'w') as _out:
-        json.dumps(dict(data.collect()))
+        json.dump(dict(data.collect()), _out)
+
+
+def read_statistics():
+    config = read_config()
+    output_path = Path(config['outputs_path'])
+    with open(output_path / 'statistics.json', 'r') as _in:
+        return json.load(_in)

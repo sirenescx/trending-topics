@@ -6,6 +6,7 @@ class TextPreprocessingOperation:
         return (
             data
             .select(
+                remove_punctuation_and_lower('title').alias('title'),
                 remove_punctuation_and_lower('summary').alias('summary'),
                 remove_punctuation_and_lower('content').alias('content'),
                 remove_punctuation_and_lower('full_text').alias('full_text'),

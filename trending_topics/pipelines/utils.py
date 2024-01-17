@@ -1,10 +1,9 @@
 import string
-from collections import Counter
 
 import nltk
 from nltk.corpus import stopwords
 from pyspark.sql.functions import udf
-from pyspark.sql.types import StringType, ArrayType, MapType, LongType
+from pyspark.sql.types import StringType, ArrayType
 
 nltk.download('stopwords')
 stop_words = set(stopwords.words('english')).union(set(stopwords.words('russian')))
@@ -69,8 +68,3 @@ def get_n_grams(text):
 
     return n_grams
 
-
-@udf(MapType(StringType(), LongType()))
-def count_phrases_frequencies(phrases):
-    word_counts = dict(Counter(phrases))
-    return word_counts

@@ -2,7 +2,7 @@ from pyspark.sql.functions import col
 
 
 class GroupingOperation:
-    def group(self, data, limit=1000):
+    def group(self, data, limit=500):
         return (
             data
             .groupBy('aggregated_n_grams')

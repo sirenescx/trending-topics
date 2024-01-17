@@ -22,14 +22,9 @@ class ComputeStatisticsPipeline:
 
     def compute(self, data):
         data_filtered_by_timestamp = self.filtering_op.filter_by_timestamp(data)
-        data_filtered_by_timestamp.show()
         data_with_preprocessed_text = self.text_preprocessing_op.preprocess_text(data_filtered_by_timestamp)
-        data_with_preprocessed_text.show()
         data_with_n_grams = self.n_grams_computing_op.compute_n_grams(data_with_preprocessed_text)
-        data_with_n_grams.show()
         data_aggregated = self.aggregation_op.aggregate(data_with_n_grams)
-        data_aggregated.show()
         data_aggregated_filtered_by_blacklist = self.filtering_op.filter_by_blacklist(data_aggregated)
         data_grouped = self.grouping_op.group(data_aggregated_filtered_by_blacklist)
-        data_grouped.show()
         return data_grouped

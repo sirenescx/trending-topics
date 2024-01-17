@@ -9,6 +9,7 @@ class AggregationOperation:
                 explode(
                     flatten(
                         array(
+                            col('title_n_grams'),
                             col('summary_n_grams'),
                             col('content_n_grams'),
                             col('full_text_n_grams'),

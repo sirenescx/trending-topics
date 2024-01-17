@@ -3,12 +3,14 @@ from pathlib import Path
 from flask import Flask, render_template, send_from_directory
 from wordcloud import WordCloud
 
+from trending_topics.utils import read_statistics
+
 app = Flask(__name__, template_folder='templates')
 
 
 @app.route('/')
 def index():
-    data = {'word1': 10, 'word2': 8, 'word3': 15}
+    data = read_statistics()
     wordcloud = WordCloud(width=1920, height=1080, background_color='white').generate_from_frequencies(data)
     image_path = Path(__file__).parent.resolve() / 'static/wordcloud.png'
     wordcloud.to_file(image_path)

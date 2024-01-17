@@ -6,7 +6,6 @@ import pendulum
 from airflow.models import DAG
 from airflow.operators.python import PythonOperator
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType, StructField, StringType, LongType
 
 PATH = Path(__file__).parent.parent.parent.resolve()
 sys.path.append(str(PATH))
@@ -46,18 +45,8 @@ def upload_to_hdfs():
         .appName('trending_topics_write_to_hdfs')
         .getOrCreate()
     )
-    schema = StructType([
-        StructField('source', StringType(), nullable=False),
-        StructField('title', StringType(), nullable=False),
-        StructField('published', LongType(), nullable=False),
-        StructField('summary', StringType(), nullable=True),
-        StructField('content', StringType(), nullable=True),
-        StructField('full_text', StringType(), nullable=True),
-        StructField('tag', StringType(), nullable=True)
-    ])
     save_to_hdfs(
         spark=spark,
-        schema=schema,
         data=fetch_data()
     )
     spark.stop()
