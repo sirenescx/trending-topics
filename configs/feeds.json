@@ -1,0 +1,44 @@
+{
+  "feeds": {
+    "ny_times": {
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+      "parser": "base"
+    },
+    "skynews": {
+      "url": "https://feeds.skynews.com/feeds/rss/world.xml",
+      "parser": "base"
+    },
+    "cnn": {
+      "url": "http://rss.cnn.com/rss/edition_world.rss",
+      "parser": "base"
+    },
+    "united_nations": {
+      "url": "https://news.un.org/feed/subscribe/en/news/all/rss.xml",
+      "parser": "base"
+    },
+    "bbc": {
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "parser": "base"
+    },
+    "fox": {
+      "url": "https://moxie.foxnews.com/google-publisher/world.xml",
+      "parser": "base"
+    },
+    "rbc": {
+      "url": "http://static.feed.rbc.ru/rbc/logical/footer/news.rss",
+      "parser": "rbc"
+    },
+    "the_moscow_times": {
+      "url": "https://www.themoscowtimes.com/rss/news",
+      "parser": "base"
+    },
+    "tass": {
+      "url": "https://tass.com/rss/v2.xml",
+      "parser": "base"
+    },
+    "meduza": {
+      "url": "https://meduza.io/rss/news",
+      "parser": "base"
+    }
+  }
+}

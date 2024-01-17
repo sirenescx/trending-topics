@@ -1,0 +1,5 @@
+{
+  "hdfs_path": "hdfs:///user/mmanakhova/trending_topics/parsed_feeds",
+  "outputs_path": "/Users/mmanakhova/Desktop",
+  "chunks": 100
+}
