@@ -9,7 +9,7 @@ from pyspark.sql import SparkSession
 
 PATH = Path(__file__).parent.parent.parent.resolve()
 sys.path.append(str(PATH))
-from trending_topics.utils import create_parser_instance, read_feeds_config, to_pandas_df, save_to_hdfs
+from trending_topics.utils import create_parser_instance, read_feeds_config, to_pandas_df, save_to_parquet
 
 dag = DAG(
     dag_id='mnkh_data_fetching_dag',
@@ -45,7 +45,7 @@ def upload_to_hdfs():
         .appName('trending_topics_write_to_hdfs')
         .getOrCreate()
     )
-    save_to_hdfs(
+    save_to_parquet(
         spark=spark,
         data=fetch_data()
     )

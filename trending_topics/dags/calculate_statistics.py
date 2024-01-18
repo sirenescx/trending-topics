@@ -9,10 +9,10 @@ from pyspark.sql import SparkSession
 
 PATH = Path(__file__).parent.parent.parent.resolve()
 sys.path.append(str(PATH))
-from trending_topics.utils import save_statistics, read_parquet
+from trending_topics.utils import save_statistics, read_parquet_from_hdfs, read_parquet
 from trending_topics.pipelines.operations.aggregate import AggregationOperation
 from trending_topics.pipelines.operations.filter import FilteringOperation
-from trending_topics.pipelines.operations.group import GroupingOperation
+from trending_topics.pipelines.operations.collect import CollectionOperation
 from trending_topics.pipelines.operations.n_grams import NGramsComputingOperation
 from trending_topics.pipelines.operations.preprocess_text import TextPreprocessingOperation
 from trending_topics.pipelines.statistics_computation import ComputeStatisticsPipeline
@@ -40,6 +40,9 @@ def calculate_statistics():
         .builder
         .master('local[*]')
         .appName('calculate_statistics')
+        .config('spark.num.executors', '16')
+        .config('spark.default.parallelism', '16')
+        .config('spark.executor.cores', '2')
         .getOrCreate()
     )
     data = read_parquet(spark)
@@ -48,7 +51,7 @@ def calculate_statistics():
         text_preprocessing_op=TextPreprocessingOperation(),
         n_grams_computing_op=NGramsComputingOperation(),
         aggregation_op=AggregationOperation(),
-        grouping_op=GroupingOperation()
+        collection_op=CollectionOperation()
     )
     statistics = pipeline.compute(data)
     save_statistics(statistics)
@@ -60,3 +63,7 @@ calculate_statistics_task = PythonOperator(
     python_callable=calculate_statistics,
     dag=dag
 )
+
+
+if __name__ == '__main__':
+    calculate_statistics()

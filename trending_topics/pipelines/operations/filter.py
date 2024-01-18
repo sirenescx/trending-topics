@@ -18,5 +18,5 @@ class FilteringOperation:
     def filter_by_blacklist(self, data):
         return (
             data
-            .filter(~col('aggregated_n_grams').isin(phrases_blacklist))
+            .filter(~col('n_gram').isin(phrases_blacklist))
         )

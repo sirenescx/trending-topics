@@ -20,7 +20,6 @@ class BaseParser:
         source: str = self._get_author(entry, source)
         title: str = self._preprocess_text(entry.title)
         summary: str = self._parse_summary(entry)
-        content: str = self._get_content(entry)
         published: int = self._get_publishing_timestamp(entry)
         if published is None:
             return None
@@ -28,7 +27,6 @@ class BaseParser:
             source=source,
             title=title,
             summary=summary,
-            content=content,
             published=published
         )
 
@@ -39,7 +37,7 @@ class BaseParser:
 
     def _parse_summary(self, entry):
         if not hasattr(entry, 'summary'):
-            return None
+            return ''
         return self._preprocess_text(entry.summary)
 
     def _get_publishing_timestamp(self, entry):
@@ -49,7 +47,7 @@ class BaseParser:
 
     def _get_content(self, entry):
         if not hasattr(entry, 'content'):
-            return None
+            return ''
         contents: list[str] = list()
         for content in entry.content:
             if hasattr(content, 'value'):

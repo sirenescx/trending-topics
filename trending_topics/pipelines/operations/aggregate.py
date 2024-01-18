@@ -1,4 +1,4 @@
-from pyspark.sql.functions import explode, flatten, array, col
+from pyspark.sql.functions import explode, col
 
 
 class AggregationOperation:
@@ -6,16 +6,14 @@ class AggregationOperation:
         return (
             data
             .select(
-                explode(
-                    flatten(
-                        array(
-                            col('title_n_grams'),
-                            col('summary_n_grams'),
-                            col('content_n_grams'),
-                            col('full_text_n_grams'),
-                            col('tag_n_grams')
-                        )
-                    )
-                ).alias('aggregated_n_grams')
+                explode(col('title_n_grams')).alias('n_gram')
+            ).union(
+                data
+                .select(
+                    explode(col('summary_n_grams')).alias('n_gram'))
+            ).union(
+                data
+                .select(
+                    explode(col('tag_n_grams')).alias('n_gram'))
             )
         )

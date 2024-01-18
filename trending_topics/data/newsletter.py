@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 import pandas as pd
 from pyspark.sql.types import StructType, StructField, StringType, LongType
@@ -10,10 +9,8 @@ class Newsletter:
     source: str
     title: str
     published: int
-    summary: Optional[str] = None
-    content: Optional[str] = None
-    full_text: Optional[str] = None
-    tag: Optional[str] = None
+    summary: str = ''
+    tag: str = ''
 
     @staticmethod
     def get_pandas_types():
@@ -22,8 +19,6 @@ class Newsletter:
             'title': pd.StringDtype(),
             'published': pd.Int64Dtype(),
             'summary': pd.StringDtype(),
-            'content': pd.StringDtype(),
-            'full_text': pd.StringDtype(),
             'tag': pd.StringDtype(),
         }
 
@@ -33,8 +28,6 @@ class Newsletter:
             StructField('source', StringType(), nullable=False),
             StructField('title', StringType(), nullable=False),
             StructField('published', LongType(), nullable=False),
-            StructField('summary', StringType(), nullable=True),
-            StructField('content', StringType(), nullable=True),
-            StructField('full_text', StringType(), nullable=True),
-            StructField('tag', StringType(), nullable=True)
+            StructField('summary', StringType(), nullable=False),
+            StructField('tag', StringType(), nullable=False)
         ])

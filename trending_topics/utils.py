@@ -49,9 +49,19 @@ def save_to_hdfs(spark, data):
     spark_df.write.mode('append').parquet(str(hdfs_path / str(get_current_timestamp())))
 
 
-def read_parquet(spark):
+def save_to_parquet(spark, data):
+    spark_df = spark.createDataFrame(
+        data=data,
+        schema=Newsletter.get_spark_schema()
+    )
     config = read_config()
-    hdfs_path: Path = Path(config['hdfs_path'])
+    local_path: Path = Path(config['local_path'])
+    spark_df.write.mode('append').parquet(str(local_path / str(get_current_timestamp())))
+
+
+def read_parquet_from_hdfs(spark):
+    config = read_config()
+    hdfs_path: Path = Path(config['hdfs_path']) / '*'
     return (
         spark
         .read
@@ -62,11 +72,25 @@ def read_parquet(spark):
     )
 
 
+def read_parquet(spark):
+    config = read_config()
+    local_path: Path = Path(config['local_path']) / '*'
+    return (
+        spark
+        .read
+        .load(
+            path=str(local_path),
+            schema=Newsletter.get_spark_schema()
+        )
+    )
+
+
 def save_statistics(data):
     config = read_config()
     output_path = Path(config['outputs_path'])
     with open(output_path / 'statistics.json', 'w') as _out:
-        json.dump(dict(data.collect()), _out)
+        print(dict(data))
+        json.dump(dict(data), _out)
 
 
 def read_statistics():
