@@ -24,4 +24,7 @@ Every hour and 10 minutes (10 minutes is enough time to acquire, record, and pro
 #### 3. UI
 **Tech stack:** Python, Flask, WordCloud
 
-User interface is pretty simple – a single page application showing cloud of trending phrases on the news. A Flask application reads json file with statistics computed in [2] and 
+User interface is pretty simple – a single page application showing cloud of trending phrases on the news. A Flask application reads json file with statistics computed in [2] and generates word cloud image to show.
+
+### How does it look?
+![img.png](demo.png)
