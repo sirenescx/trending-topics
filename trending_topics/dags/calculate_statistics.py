@@ -63,7 +63,3 @@ calculate_statistics_task = PythonOperator(
     python_callable=calculate_statistics,
     dag=dag
 )
-
-
-if __name__ == '__main__':
-    calculate_statistics()
