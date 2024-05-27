@@ -1,3 +1,5 @@
+<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" /> <img src="https://img.shields.io/badge/Apache_Spark-FFFFFF?style=for-the-badge&logo=apachespark&logoColor=#E35A16" /> <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" /> ![airflow](https://img.shields.io/badge/airflow-red?style=for-the-badge&logo=apache-airflow)
+
 # Trending Topics
 
 This repository contains code for the web application showing trending words and phrases from world and Russian news
